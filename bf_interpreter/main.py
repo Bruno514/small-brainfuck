@@ -1,6 +1,6 @@
 import argparse
 
-from small_brainfuck.interpreter import Brainfuck
+from bf_interpreter.interpreter import Brainfuck
 
 
 def main():
