@@ -1,12 +1,17 @@
-from interpreter import Brainfuck
+import argparse
 
-s = '''\
-++>++++++>+++++<+[>[->+<]<->++++++++++<]>>.<[-]>[-<++>]
-<----------------.---------------.+++++.<+++[-<++++++++++>]<.
->>+.++++++++++.<<.>>+.------------.---.<<.>>---.
-+++.++++++++++++++.+.<<+.[-]++++++++++.
-'''
+from brainfuck.interpreter import Brainfuck
 
-running = Brainfuck(s)
 
-running.execute(running.code)
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("file")
+
+    args = parser.parse_args()
+
+    with open(args.file, "r") as f:
+        code = f.read()
+
+    to_run = Brainfuck(code)
+
+    to_run.execute()

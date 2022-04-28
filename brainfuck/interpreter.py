@@ -3,40 +3,39 @@ class Brainfuck:
 
     def __init__(self, raw_code):
         self.raw_code = raw_code
-        self.code = self.cleanup(raw_code)
+        self.code = self.cleanup()
 
-    def cleanup(self, raw_code):
-        return list(filter(lambda t: t in Brainfuck.commands, raw_code))
+    def cleanup(self):
+        return list(filter(lambda t: t in Brainfuck.commands, self.raw_code))
 
-    def execute(self, code):
+    def execute(self):
         pointer = [0] * 30000
         pointer_location = 0
         exec_location = 0
-        brace_matches = self.brace_match(code)
+        brace_matches = self.brace_match()
 
-        while exec_location < len(code):
-            if code[exec_location] == ">":
+        while exec_location < len(self.code):
+            if self.code[exec_location] == ">":
                 pointer_location += 1
-            elif code[exec_location] == "<":
+            elif self.code[exec_location] == "<":
                 pointer_location -= 1
-            elif code[exec_location] == "+":
+            elif self.code[exec_location] == "+":
                 pointer[pointer_location] = (pointer[pointer_location] + 1) % 256
-            elif code[exec_location] == "-":
+            elif self.code[exec_location] == "-":
                 pointer[pointer_location] = (pointer[pointer_location] - 1) % 256
-            elif code[exec_location] == ".":
-                print(pointer[pointer_location])
-            elif code[exec_location] == ",":
-                # pointer[loc] = ord(program_input.pop(0))
+            elif self.code[exec_location] == ".":
+                print(chr(pointer[pointer_location]), end="")
+            elif self.code[exec_location] == ",":
+                # TODO: implement input
                 pass
-            elif code[pointer_location] == "[" and code[pointer_location] == 0:
+            elif self.code[exec_location] == "[" and pointer[pointer_location] == 0:
                 exec_location = brace_matches[exec_location]
-            elif code[pointer_location] == "]" and code[pointer_location] != 0:
+            elif self.code[exec_location] == "]" and pointer[pointer_location] != 0:
                 exec_location = brace_matches[exec_location]
 
             exec_location += 1
-            #print(exec_location)
 
-    def brace_match(self, code):
+    def brace_match(self):
         """
         this function return a dictionary containing each opening brace
         and its closing brace
@@ -44,7 +43,7 @@ class Brainfuck:
 
         temp_stack = []
         brace_match = {}
-        for i in range(len(code)):
+        for i in range(len(self.code)):
             if self.code[i] == "[":
                 temp_stack.append(i)
             elif self.code[i] == "]":
