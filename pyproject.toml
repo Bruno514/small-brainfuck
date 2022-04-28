@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "brainfuck"
+name = "small-brainfuck"
 version = "0.0.1"
 description = ""
 authors = ["Bruno Silva Oliveira <brunooliveira095@protonmail.com>"]
@@ -14,4 +14,4 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-bf = 'brainfuck.main:main'
+bf = 'small_brainfuck.main:main'
